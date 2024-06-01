@@ -19,6 +19,7 @@ resource "aws_security_group" "ssh_access" {
   name        = "${var.prefix}-ssh_access"
   description = "SSH access group"
 
+//make it dynamic
   ingress {
     from_port = 22
     to_port = 22
@@ -37,6 +38,7 @@ resource "aws_key_pair" "ssh_key" {
   public_key = "${file("${path.module}/../id_rsa.pub")}"
 }
 
+### make everything dynamic
 data "aws_ami" "amazon_linux_2" {
  most_recent = true
 
@@ -66,7 +68,7 @@ resource "aws_security_group" "front_end_sg" {
   }
 }
 
-# Allow all outbound connections
+# Allow all outbound connections, dynamic egress
 resource "aws_security_group_rule" "front_end_all_out" {
   type        = "egress"
   to_port           = 0
@@ -82,6 +84,7 @@ resource "aws_instance" "front_end" {
   key_name      = "${aws_key_pair.ssh_key.key_name}"
   associate_public_ip_address = true
 
+### dynamic
   root_block_device {
     volume_type = "gp2"
     volume_size = 8

@@ -10,6 +10,8 @@ resource "aws_s3_bucket" "terraform_infra" {
     enabled = true
   }
 
+### terraform backend code
+
   # To cleanup old states eventually
   lifecycle_rule {
     enabled = true
